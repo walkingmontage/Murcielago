@@ -1,19 +1,20 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
-import Lessons from 'Lessons'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import todoApp from './reducers'
+import App from './components/App'
 
-class Mengmeng extends Component {
-    render(){
-        return (
-            <div>
-                <h1>Miss</h1>
-                <Lessons />
-            </div>
-        )
-    }
-}
+let store = createStore(todoApp, {},  window.devToolsExtension ? window.devToolsExtension() : f => f)
+
+console.log('初始化的state为:', store.getState())
+store.subscribe(() =>
+    console.log('store发生改变:', store.getState())
+);
 
 ReactDOM.render(
-    <Mengmeng />,
-    document.querySelector('#container')
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.querySelector('#container')
 )
