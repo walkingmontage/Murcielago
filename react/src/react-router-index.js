@@ -20,7 +20,7 @@ class App extends Component {
 class About extends Component {
     render(){
         return (
-            <h1>about me</h1>
+            <h1>about me 345</h1>
         )
     }
 }

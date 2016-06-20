@@ -1,22 +1,18 @@
-var gulp = require('gulp');
-var nodemon = require('gulp-nodemon');
-var browserify = require('browserify');
-var source = require('vinyl-source-stream');
-var config = require('./config/index')
-var path = require('path')
+const gulp = require('gulp'),
+    nodemon = require('gulp-nodemon'),
+    path = require('path'),
+    webpack = require('webpack-stream'),
+    config = require('./config/index'),
+    uglify = require('gulp-uglify'),
+    webpackConfig = require('./webpack.config'),
+    reactOutput = path.resolve(config.basedir, 'static/dist');
 
-gulp.task('babel', function() {
-    return browserify('react/src/react-router-index.js', {
-            paths: ['react/src/js/components'],
-            basedir: config.base_dir
-        })
-        .transform('babelify', {
-            plugins: ['transform-class-properties'],
-            presets: ['react', 'es2015']
-        })
-        .bundle()
-        .pipe(source('react-router-index.js'))
-        .pipe(gulp.dest('react/build/'));
+
+gulp.task('webpack', function() {
+    return gulp.src(path.join(config.basedir, 'react/src/**/*.js'))
+        .pipe(webpack(webpackConfig))
+        .pipe(uglify())
+        .pipe(gulp.dest(reactOutput));
 });
 
 
@@ -39,21 +35,24 @@ gulp.task('nodemon', function() {
         },
         "ext": "js json html",
         "script": "./bin/www",
-        "exec": 'node --debug',
+        "exec": 'node'
+        //"exec": 'node --debug',
     })
     .on('restart', function(){
         console.log('restarted...')
     })
 })
 
+/*
 gulp.task('watch', function() {
-    var watcher = gulp.watch('react/src/**/*.js', ['babel']);
+    var watcher = gulp.watch('react/src/!**!/!*.js', ['babel']);
     watcher.on('change', function(event) {
         console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
     });
     return watcher
 })
+*/
 
-gulp.task('default', ['babel', 'nodemon', 'watch'], function() {
+gulp.task('default', ['nodemon'], function() {
     console.log('Server started ...')
 })

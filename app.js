@@ -21,10 +21,61 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/react', express.static( path.join(__dirname, 'react/build')));
+//app.use('/react', express.static( path.join(__dirname, 'react/build')));
+
+var webpackDevMiddleware = require("webpack-dev-middleware");
+var webpack = require("webpack");
+var webpackConfig = require('./webpack.config')
+var compiler = webpack(webpackConfig)
+app.use(webpackDevMiddleware(compiler, {
+  // all options optional
+
+  noInfo: false,
+  // display no info to console (only warnings and errors)
+
+  quiet: false,
+  // display nothing to the console
+
+  //lazy: true,
+  // switch into lazy mode
+  // that means no watching, but recompilation on every request
+
+  //watchOptions: {
+  //  aggregateTimeout: 300,
+  //  poll: true
+  //},
+  // watch options (only lazy: false)
+
+
+  publicPath: webpackConfig.output.publicPath,
+
+  //hot: true,
+  // public path to bind the middleware to
+  // use the same as in webpack
+
+  //headers: { "X-Custom-Header": "yes" },
+  //// custom headers
+
+  stats: {
+    colors: true
+  }
+  // options for formating the statistics
+}));
+
+app.use(require("webpack-hot-middleware")(compiler, {
+  //log: console.log,
+  //path: '/__webpack_hmr',
+  //heartbeat: 10 * 1000
+}));
+
 
 app.use('/', routes);
 app.use('/users', users);
+
+
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
