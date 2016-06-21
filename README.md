@@ -11,13 +11,13 @@ Setting up React/Redux/React-router for ES2015+ with Webpack-dev-middleware and 
 $ npm install
 ```
  
-* Development
+* Development env
 
     ```
     $ gulp
     ```
 
-* Production
+* Production env
     
     ```
     $ pm2 start pm2.json

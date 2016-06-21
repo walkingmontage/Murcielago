@@ -22,7 +22,8 @@ gulp.task('nodemon', function() {
             '.git',
             'node_modules',
             'public',
-            '.idea'
+            '.idea',
+            'react' //Do not restart server when HMR working
         ],
         "env": {
             "NODE_ENV": "development",
