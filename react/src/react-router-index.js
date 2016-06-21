@@ -8,8 +8,8 @@ class App extends Component {
             <div>
                 <h1>App</h1>
                 <ul>
-                    <li><Link to="/about">About</Link></li>
-                    <li><Link to="/inbox">inbox</Link></li>
+                    <li><Link to="/react-router/about">About</Link></li>
+                    <li><Link to="/react-router/inbox">inbox</Link></li>
                 </ul>
                 {this.props.children}
             </div>
@@ -20,7 +20,7 @@ class App extends Component {
 class About extends Component {
     render(){
         return (
-            <h1>about me 345</h1>
+            <h1>about me</h1>
         )
     }
 }
@@ -50,7 +50,7 @@ class Message extends Component {
 
 ReactDOM.render(
     <Router history={browserHistory}>
-        <Route path="/" component={App}>
+        <Route path="/react-router" component={App}>
             <Route path="about" component={About} />
             <Route path="inbox" component={Inbox}>
                 <Redirect from="messages/:id" to="/messages/:id" />

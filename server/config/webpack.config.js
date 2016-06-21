@@ -1,25 +1,19 @@
-const config = require('./config/index')
+const config = require('./index')
 const path = require('path')
-const webpack = require('webpack')
 
 const reactEntry = path.resolve(config.basedir, 'react/src'),
-    reactOutput = path.resolve(config.basedir, 'static/dist'),
-    reactComponents = path.resolve(config.basedir, 'react/src/components');
-
-var publicPath = '/static/dist';
-var hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
+    reactOutput = path.resolve(config.basedir, 'react/build');
 
 module.exports = {
     context: reactEntry,
     entry: {
-        index: ['./index.js', hotMiddlewareScript],
-        router: ['./react-router-index.js', hotMiddlewareScript]
+        index: './index.js',
+        router: './react-router-index.js'
     },
     output: {
         filename: '[name].js',
-        //chunkFilename: '[id].bundle.js',
+        chunkFilename: '[id].bundle.js',
         path: reactOutput,
-        publicPath: publicPath
     },
 
     module: {
@@ -38,13 +32,5 @@ module.exports = {
 
             }
         ]
-    },
-
-    devtool: '#source-map',
-
-    plugins: [
-        new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.HotModuleReplacementPlugin(),   //配合react-hot
-        new webpack.NoErrorsPlugin()
-    ]
+    }
 };

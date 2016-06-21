@@ -1,0 +1,13 @@
+{
+  "apps": [
+    {
+      "name": "Murcielago",
+      "script": "./server/bin/www",
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": "5678",
+        "NODE_PATH": ""
+      }
+    }
+  ]
+}

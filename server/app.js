@@ -21,58 +21,22 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-//app.use('/react', express.static( path.join(__dirname, 'react/build')));
-
-var webpackDevMiddleware = require("webpack-dev-middleware");
-var webpack = require("webpack");
-var webpackConfig = require('./webpack.config')
-var compiler = webpack(webpackConfig)
-app.use(webpackDevMiddleware(compiler, {
-  // all options optional
-
-  noInfo: false,
-  // display no info to console (only warnings and errors)
-
-  quiet: false,
-  // display nothing to the console
-
-  //lazy: true,
-  // switch into lazy mode
-  // that means no watching, but recompilation on every request
-
-  //watchOptions: {
-  //  aggregateTimeout: 300,
-  //  poll: true
-  //},
-  // watch options (only lazy: false)
 
 
-  publicPath: webpackConfig.output.publicPath,
+app.use('/react', express.static( path.join(__dirname, '../react/build')));
 
-  //hot: true,
-  // public path to bind the middleware to
-  // use the same as in webpack
 
-  //headers: { "X-Custom-Header": "yes" },
-  //// custom headers
+//webpack dev server middleware
+//http://webpack.github.io/docs/webpack-dev-middleware.html
 
-  stats: {
-    colors: true
-  }
-  // options for formating the statistics
-}));
-
-app.use(require("webpack-hot-middleware")(compiler, {
-  //log: console.log,
-  //path: '/__webpack_hmr',
-  //heartbeat: 10 * 1000
-}));
+console.log('Current env:', app.get('env'))
+if(app.get('env') === 'development'){
+  require('./mid/webpack-dev-middleware')(app)
+}
 
 
 app.use('/', routes);
 app.use('/users', users);
-
-
 
 
 
