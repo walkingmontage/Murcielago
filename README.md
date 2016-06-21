@@ -3,14 +3,14 @@ Setting up React/Redux/React-router for ES2015+ with Webpack-dev-middleware and 
 
 ## Requirements
 * nodejs ^6.2.0
+* expressjs ^4.x
 
 ## Getting Start
 
 ```
 $ npm install
 ```
-
-
+ 
 * Development
 
     ```
@@ -54,3 +54,16 @@ Default webpack configuration can be found in `~/server/config/` Here you'll be 
     ```
     $ gulp build
     ```
+    
+## Examples
+Run gulp
+
+```
+$ gulp
+```
+
+and then:
+
+* go to `localhost:1234/todo` to take a look at the react+redux example 
+
+* go to `localhost:1234/react-router` to take a look at the react-router example
