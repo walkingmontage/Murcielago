@@ -24,29 +24,32 @@ $ npm install
     ```
 
 ## Developer tools
-######  1. webpack-dev-middleware + webpack-hot-middleware
+####  1. webpack
 
-The webpack-dev-middleware module supports multiple modes to automatic refresh the page. And the webpack-hot-middleware module supports to update modules as “Hot Module Replacement” (HMR) 
+We use `webpack-dev-middleware` + `webpack-hot-middleware` modules to support multiple modes to automatic refresh the page and update modules as “Hot Module Replacement” (HMR) 
 
-###### 2. nodemon  
+#### 2. nodemon  
 
 Restart server automaticly.
 
-###### 3. gulp
+#### 3. gulp
 
 Start the server and compiles react + redux + es2015 in development environment.
 
-###### 4. pm2
+#### 4. pm2
 
 Start the server in production environment
 
 ## Build System
 
-1. ~/server/config/webpack.dev.config.js is the webpack configuration file in development environment. Uses to compile modules as HMR mode in memory.
+#### Configuration
+Default webpack configuration can be found in `~/server/config/` Here you'll be able to redefine your src and dist directories.adjust compilation settings, tweak your vendor dependencies, and more.
 
-2. ~/server/config/webpack.dev.js is the webpack configuration file output the compiled files which will be used in production environment.
+* `webpack.dev.config.js` is the webpack configuration file in development environment. Uses to compile modules as HMR mode in memory.
 
-3. How to build file for production env
+* `webpack.config.js` is the webpack configuration file output the compiled files which will be used in production environment.
+
+* Building for production env
     
     ```
     $ gulp build
